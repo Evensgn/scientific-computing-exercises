@@ -1,0 +1,116 @@
+\input{./def.tex}
+
+\title{科学计算 Exercise 09a}
+\author{范舟\\516030910574\\致远学院2016级ACM班}
+\date{}
+
+\begin{document}
+\lstset{numbers=left,
+  basicstyle=\scriptsize\courier,
+  numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\paragraph{2.} \textbf{证明}
+\paragraph{(1)} 因为$\mathbf{A}$是正定矩阵，则有
+\[\mathbf{x^TAx} > 0, \quad \forall \mathbf{x} \in \mathbf{R^n} \setminus \{\mathbf{0}\}\]
+考虑$\mathbf{R^n}$的单位正交基${\mathbf{e_1}, \mathbf{e_2}, \dots, \mathbf{e_n}}$，其中
+\[\mathbf{e_k} = (0, \dots, 0, \mathop{1}\limits_{k}, 0, \dots, 0)^T, \quad k = 1, 2, \dots, n\]
+则有
+\[a_{ii} = \mathbf{e_i^TAe_i} > 0, \quad i = 1, 2, \dots, n\]
+证毕.
+\paragraph{(2)} 首先证明$\mathbf{A_2}$是对称矩阵.由(1)知$a_{11} > 0$，经过高斯消去一步后，$\mathbf{A_2} = (a_{ij}^{(2)})_{n - 1}$，有
+\[a_{ij}^{(2)} = a_{ij} - \frac{a_{i1}}{a_{11}}a_{1j}\]
+由于$\mathbf{A} = (a_{ij})_n$为对称矩阵，有$a_{ij} = a{ji}, \quad i, j = 1, 2, \dots, n$，因此
+\[a_{ij}^{(2)} = a_{ij} - \frac{a_{i1}}{a_{11}}a_{1j} = a_{ji} - \frac{a_{j1}}{a_{11}}a_{1i} = a_{ji}^{(2)}, \quad i, j = 2, 3, \dots, n\]
+因此$\mathbf{A_2}$为对称矩阵.\\
+由于每次初等行变换可看作左乘一初等阵$\mathbf{P_k}$，而高斯消去法的每步操作均为初等行变换，因此有
+\[\mathbf{PA}=\begin{bmatrix}
+a_{11} & \mathbf{a_1^T}\\  
+\mathbf{0} & \mathbf{A_2}
+\end{bmatrix}, \quad \mathbf{P} = \mathbf{P_tP_{t-1}} \dots \mathbf{P_1}\]
+其中$\mathbf{P}$为每步初等行变换对应的初等阵$\mathbf{P_k}$的乘积，由于初等阵均为可逆矩阵，因此$\mathbf{P}$也是可逆的.
+由于$A$是对称矩阵，有
+\[\mathbf{PAP^T} = \begin{bmatrix}
+a_{11} & \mathbf{0} \\  
+\mathbf{0} & \mathbf{A_2}
+\end{bmatrix}\]
+对于$\mathbf{R^n}$中的任一非零向量$\mathbf{x}$，因为$\mathbf{P}$是可逆的，有$\mathbf{xP^T}$非零，则有
+\[\mathbf{x^T}\begin{bmatrix}
+a_{11} & \mathbf{0} \\  
+\mathbf{0} & \mathbf{A_2}
+\end{bmatrix}\mathbf{x} = \mathbf{x^T PAP^Tx} = \mathbf{(xP^T)^TA(xP^T)} > 0\]
+因此$\begin{bmatrix}
+a_{11} & \mathbf{0} \\  
+\mathbf{0} & \mathbf{A_2}
+\end{bmatrix}$是正定矩阵，因此其各阶顺序主子式均大于0，又因为$a_{11} > 0$，可得$\mathbf{A_2}$的各阶顺序主子式均大于0，则$\mathbf{A_2}$为正定矩阵，证毕.
+\newline
+
+\paragraph{4.} \textbf{解}\\
+设$\mathbf{A} = \begin{bmatrix}
+a_{11} & a_{12} & \dots & a_{1n} \\ 
+a_{21} & a_{22} & \dots & a_{2n} \\ 
+\vdots & \vdots &  & \vdots \\ 
+a_{n1} & a_{n2} & \dots & a_{nn} 
+\end{bmatrix}$，$\mathbf{L} = \begin{bmatrix}
+l_{11} &  &  &  \\ 
+l_{21} &  l_{22} &  &  \\ 
+\vdots & \vdots & \ddots &  \\ 
+l_{n1} & l_{n2} & \dots & l_{nn} 
+\end{bmatrix}$，$\mathbf{U} = \begin{bmatrix}
+1 & u_{12} & \dots & u_{1n} \\ 
+ &  1 &  & u_{2n} \\ 
+ &  & \ddots &  \vdots\\ 
+ &  &  & 1 
+\end{bmatrix}$
+由$\mathbf{A} = \mathbf{LU}$，得
+\[\begin{split}
+u_{ii} = 1, & \quad i = 1,2,\dots,n \\
+a_{1i} = l_{11}u_{1i}, \quad u_{1i} = \frac{a_{1i}}{l_{11}}, & \quad i = 1,2,\dots,n \\
+a_{i1} = l_{i1}u_{11} = l_{i1}, & \quad i = 1,2,\dots,n
+\end{split}\]
+对于$\mathbf{L}$的第$k$列和$\mathbf{U}$的第$k$行，有
+\[\begin{split}
+a_{ki} = \sum_{t = 1}^{k}l_{kt}u_{ti}, & \quad i = 1,2,\dots,n \\
+u_{ki} = \frac{a_{ki} - \sum_{t = 1}^{k - 1}l_{kt}u_{ti}}{l_{kk}}, & \quad i = 1,2,\dots,n \\
+a_{ik} = \sum_{t = 1}^{k}l_{it}u_{tk}, & \quad i = 1,2,\dots,n \\
+l_{ik} = \frac{a_{ik} - \sum_{t = 1}^{k - 1}l_{kt}u_{ti}}{u_{kk}} = a_{ik} - \sum_{t = 1}^{k - 1}l_{kt}u_{ti}, & \quad i = 1,2,\dots,n 
+\end{split}\]
+因此，可以先求出$\mathbf{L}$的第$1$列和$\mathbf{U}$的第$1$行
+\[\begin{split}
+u_{1i} = \frac{a_{1i}}{l_{11}}, & \quad i = 1,2,\dots,n \\
+l_{i1} = a_{i1}, & \quad i = 1,2,\dots,n
+\end{split}\]
+之后依次递增$k$，按照下面的公式求出$\mathbf{L}$的第$k$列和$\mathbf{U}$的第$k$行，即求得$\mathbf{L}$与$\mathbf{U}$.
+\[\begin{split}
+u_{ki} = \frac{a_{ki} - \sum_{t = 1}^{k - 1}l_{kt}u_{ti}}{l_{kk}}, & \quad i = 1,2,\dots,n \\
+l_{ik} = a_{ik} - \sum_{t = 1}^{k - 1}l_{kt}u_{ti}, & \quad i = 1,2,\dots,n 
+\end{split}\]
+\newline
+
+\paragraph{16.} \textbf{证明} \\
+\[\Vert\mathbf{A}^{-1}\Vert_{\infty} = \max_{\mathbf{x} \ne 0} \frac{\Vert \mathbf{A}^{-1}\mathbf{x}\Vert_{\infty}}{\Vert \mathbf{x} \Vert_{\infty}}\]
+令$\mathbf{y} = \mathbf{A}^{-1}\mathbf{x}$，则有
+\[\Vert\mathbf{A}^{-1}\Vert_{\infty} = \max_{\mathbf{y} \ne 0} \frac{\Vert \mathbf{y}\Vert_{\infty}}{\Vert \mathbf{Ay} \Vert_{\infty}}\]
+即得
+\[\frac{1}{\Vert\mathbf{A}^{-1}\Vert_{\infty}} = \min_{\mathbf{y} \ne 0} \frac{\Vert \mathbf{Ay}\Vert_{\infty}}{\Vert \mathbf{y} \Vert_{\infty}}\]
+证毕.
+\newline
+
+\paragraph{20.} \textbf{证明} \\
+由$\Vert \mathbf{AB} \Vert \le \Vert \mathbf{A} \Vert \Vert \mathbf{B} \Vert$ 得
+\[\begin{split}
+\mathrm{cond}(\mathbf{AB}) & = \Vert (\mathbf{AB})^{-1} \Vert \Vert \mathbf{AB} \Vert \\
+& \le \Vert \mathbf{A}^{-1} \Vert \Vert \mathbf{B}^{-1} \Vert \Vert \mathbf{A} \Vert \Vert \mathbf{B} \Vert \\
+& = \mathrm{cond}(\mathbf{A})\mathrm{cond}(\mathbf{B})
+\end{split}\]
+证毕.
+
+\end{document}

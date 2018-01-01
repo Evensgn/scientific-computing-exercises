@@ -1,0 +1,150 @@
+\input{./def.tex}
+
+\title{科学计算 Exercise 10}
+\author{范舟\\516030910574\\致远学院2016级ACM班}
+\date{}
+
+\begin{document}
+\lstset{numbers=left,
+  basicstyle=\scriptsize\courier,
+  numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+  language=Matlab,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\paragraph{3.} \textbf{证明} \\
+设线性方程组的系数矩阵为$\mathbf{A}$，则
+\[\mathbf{A} = \begin{bmatrix}
+a_{11} & 0\\ 
+0 & a_{22}
+\end{bmatrix} - \begin{bmatrix}
+0 & 0\\ 
+-a_{21} & 0
+\end{bmatrix} - \begin{bmatrix}
+0 & -a_{12}\\ 
+0 & 0
+\end{bmatrix} \equiv \mathbf{D} - \mathbf{L} - \mathbf{U}\]
+设迭代方程为
+\[\mathbf{x}^{(k + 1)} = \mathbf{B}\mathbf{x}^{(k)} + \mathbf{f}, \quad k = 0, 1, \dots\]
+若使用雅可比迭代法，则
+\[\mathbf{B_1} = \mathbf{D}^{-1}(\mathbf{L} + \mathbf{U}) = \begin{bmatrix}
+0 & -\frac{a_{12}}{a_{11}}\\ 
+-\frac{a_{21}}{a_{22}} & 0
+\end{bmatrix}\]
+求得其特征值为
+\[\bigg|\frac{a_{12}a_{21}}{a_{11}a_{22}}\bigg|^{\frac{1}{2}}, \quad -\bigg|\frac{a_{12}a_{21}}{a_{11}a_{22}}\bigg|^{\frac{1}{2}}\]
+则有
+\[\rho(\mathbf{B_1}) = \bigg|\frac{a_{12}a_{21}}{a_{11}a_{22}}\bigg|^{\frac{1}{2}}\]
+若使用高斯-塞德尔迭代法，则
+\[\mathbf{B_2} = (\mathbf{D} - \mathbf{L})^{-1}\mathbf{U} = \begin{bmatrix}
+0 & -\frac{a_{12}}{a_{11}}\\ 
+0 & -\frac{a_{12}a_{21}}{a_{11}a_{22}}
+\end{bmatrix}\]
+求得其特征值为
+\[0, \quad -\frac{a_{12}a_{21}}{a_{11}a_{22}}\]
+则有
+\[\rho(\mathbf{B_2}) = \bigg|\frac{a_{12}a_{21}}{a_{11}a_{22}}\bigg|\]
+因此
+\[\rho(\mathbf{B_1}) < 1 \quad \Leftrightarrow \quad \rho(\mathbf{B_2}) < 1\]
+即证得此方程组的雅可比迭代法与高斯-塞德尔迭代法同时收敛或发散. \\
+若两种迭代法收敛（即$\rho(\mathbf{B_1}) < 1$），则二者的渐进收敛速度之比为
+\[\frac{R(\mathbf{B_1})}{R(\mathbf{B_2})} = \frac{\ln \rho(\mathbf{B_1})}{\ln \rho(\mathbf{B_2})} = \frac{1}{2}\]
+\newline
+
+\paragraph{4.} \textbf{解} \\
+\[\mathbf{A} = \begin{bmatrix}
+10 & 0 & 0\\
+0 & 10 & 0\\ 
+0 & 0 & 5
+\end{bmatrix} - \begin{bmatrix}
+0 & 0 & 0\\
+-b & 0 & 0\\ 
+0 & -a & 0
+\end{bmatrix} - \begin{bmatrix}
+0 & -a & 0\\
+0 & 0 & -b\\ 
+0 & 0 & 0
+\end{bmatrix} \equiv \mathbf{D} - \mathbf{L} - \mathbf{U}\]
+若使用雅可比迭代法，则
+\[\mathbf{B_1} = \mathbf{D}^{-1}(\mathbf{L} + \mathbf{U}) = \begin{bmatrix}
+0 & -\frac{a}{10} & 0\\
+-\frac{b}{10} & 0 & -\frac{b}{10}\\ 
+0 & -\frac{a}{5} & 0
+\end{bmatrix}\]
+求得其特征值为
+\[0, \quad -\frac{(3ab)^{\frac{1}{2}}}{10}, \quad \frac{(3ab)^{\frac{1}{2}}}{10}\]
+则有
+\[\rho(\mathbf{B_1}) = \bigg|\frac{(3ab)^{\frac{1}{2}}}{10}\bigg|\]
+因此雅可比迭代法收敛的充分必要条件为
+\[|ab| < \frac{100}{3}\]
+若使用高斯-塞德尔迭代法，则
+\[\mathbf{B_2} = \mathbf{D}^{-1}(\mathbf{L} + \mathbf{U}) = \begin{bmatrix}
+0 & -\frac{a}{10} & 0\\
+0 & \frac{ab}{100} & -\frac{b}{10}\\ 
+0 & -\frac{a^2b}{500} & \frac{ab}{50}
+\end{bmatrix}\]
+求得其特征值为
+\[0, \quad 0, \quad \frac{3ab}{100}\]
+则有
+\[\rho(\mathbf{B_2}) = \bigg|\frac{3ab}{100}\bigg|\]
+因此高斯-塞德尔迭代法收敛的充分必要条件为
+\[|ab| < \frac{100}{3}\]
+\newline
+
+\paragraph{6.} \textbf{解} \\
+\[\mathbf{A} = \begin{bmatrix}
+3 & 0 & 0\\
+0 & 2 & 0\\ 
+0 & 0 & 2
+\end{bmatrix} - \begin{bmatrix}
+0 & 0 & 0\\
+0 & 0 & 0\\ 
+2 & -1 & 0
+\end{bmatrix} - \begin{bmatrix}
+0 & 0 & 2\\
+0 & 0 & -1\\ 
+0 & 0 & 0
+\end{bmatrix} \equiv \mathbf{D} - \mathbf{L} - \mathbf{U}\]
+若使用雅可比迭代法，则
+\[\mathbf{B_1} = \mathbf{D}^{-1}(\mathbf{L} + \mathbf{U}) = \begin{bmatrix}
+0 & 0 & \frac{2}{3}\\
+0 & 0 & -\frac{1}{2}\\ 
+1 & -\frac{1}{2} & 0
+\end{bmatrix}\]
+求得其特征值为
+\[0, \quad -0.9574, \quad 0.9574\]
+则有
+\[\rho(\mathbf{B_1}) = 0.9574 < 1\]
+因此雅可比迭代法收敛.
+若使用高斯-塞德尔迭代法，则
+\[\mathbf{B_2} = \mathbf{D}^{-1}(\mathbf{L} + \mathbf{U}) = \begin{bmatrix}
+0 & 0 & \frac{2}{3} \\
+0 & 0 & -\frac{1}{2} \\ 
+0 & 0 & \frac{11}{12}
+\end{bmatrix}\]
+求得其特征值为
+\[0, \quad 0, \quad 0.9167\]
+则有
+\[\rho(\mathbf{B_2}) = 0.9167 < 1\]
+因此高斯-塞德尔迭代法收敛. \\
+又因为$\rho(\mathbf{B_2}) < \rho(\mathbf{B_1})$，因此高斯-塞德尔迭代法的收敛速度快.
+\newline
+
+\paragraph{9.} \textbf{证明} \\
+将迭代公式改写为标准形式
+\[\mathbf{x}^{(k + 1)} = (\mathbf{I} - \omega\mathbf{A}) \mathbf{x}^{(  k)} + \omega \mathbf{b}\]
+令$\mathbf{B} = \mathbf{I} - \omega\mathbf{A}$，则有
+\[\lambda(\mathbf{B}) = 1 - \omega \lambda(\mathbf{A})\]
+若迭代法收敛，有$|\lambda(\mathbf{B})| < 1$，则
+\[-1 < 1 - \omega \lambda(\mathbf{A}) < 1 \quad \Rightarrow \quad 0 < \omega\lambda(\mathbf{A}) < 2\]
+因为$\mathbf{A}$为正定矩阵，有$\lambda(\mathbf{A}) > 0$，则有
+\[0 < \omega < \frac{2}{\lambda(\mathbf{A})}\]
+因为$\max \lambda(\mathbf{A}) = \beta$，只需$0 < \omega < \frac{2}{\beta}$，迭代法即收敛，证毕.
+
+\end{document}

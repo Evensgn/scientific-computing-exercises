@@ -1,0 +1,179 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{ctex}
+
+\usepackage{float}
+\usepackage[super, square]{natbib}
+\usepackage[margin = 1in]{geometry}
+\usepackage{
+  color,
+  clrscode,
+  amssymb,
+  ntheorem,
+  amsmath,
+  listings,
+  fontspec,
+  xcolor,
+  supertabular,
+  multirow
+}
+\definecolor{bgGray}{RGB}{36, 36, 36}
+\usepackage[
+  colorlinks,
+  linkcolor=bgGray,
+  anchorcolor=blue,
+  citecolor=black
+]{hyperref}
+\newfontfamily\courier{Courier}
+
+\theoremstyle{margin}
+\theorembodyfont{\normalfont}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\st}{\text{s.t.}}
+\newcommand{\mn}{\mathnormal}
+\newcommand{\tbf}{\textbf}
+\newcommand{\fl}{\mathnormal{fl}}
+\newcommand{\f}{\mathnormal{f}}
+\newcommand{\g}{\mathnormal{g}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\JD}{\textbf{D}}
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\str}{^*}
+\newcommand{\vep}{\varepsilon}
+\newcommand{\lhs}{\text{L.H.S}}
+\newcommand{\rhs}{\text{R.H.S}}
+\newcommand{\con}{\text{Const}}
+\newcommand{\oneton}{1,\,2,\,\dots,\,n}
+\newcommand{\aoneton}{a_1a_2\dots a_n}
+\newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
+
+
+\title{科学计算 Exercise 2}
+\author{范舟\\516030910574\\致远学院2016级ACM班}
+\date{}
+
+\begin{document}
+
+\lstset{numbers=left,
+  basicstyle=\scriptsize\courier,
+  numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+  language=C++,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\section{教材练习 P48-49}
+
+首先证明下面的定理1。
+
+\paragraph{定理1} 设在区间$\left[a,b\right]$上给定$n+1$个点
+$$a\leq x_0<x1<\dots<x_n\leq b$$
+上的函数值$y_i=f\left(i\right)\left(i=0,1,\dots,n\right)$，求一次数不超过$n$的多项式$P\left(x\right)=a_0+a_1 x+\dots+a_n x^n$，使
+$$P\left(x_i\right)=y_i,\ i=0,1,\dots,n$$
+则多项式$P(x)$是存在且唯一的。
+
+\paragraph{证明} 由定理条件可得关于多项式系数$a_0,a_1,\dots,a_n$的$n+1$元线性方程组
+$$\left\{\begin{matrix}
+a_0 + a_1 x_0 + \dots + a_n x_0^n = y_0 \\ 
+a_0 + a_1 x_1 + \dots + a_n x_1^n = y_1 \\ 
+\vdots  \\ 
+a_0 + a_1 x_n + \dots + a_n x_n^n = y_n
+\end{matrix}\right.$$
+此方程的系数矩阵$A$为一个Vandermonde矩阵，因$x_i\left(i=0,1,\dots,n\right)$互异，其行列式
+$$\det A=\prod_{i,j=0,\ i>j}^{n}\left(x_i-x_j\right) \ne 0$$ 
+因此线性方程组的解$a_0,a_1,\dots,a_n$存在且唯一，证毕。
+\newline
+
+4.
+
+(1) 等式两边均为次数不超过$n$的多项式，且在$x_j\left(j=0,1,\dots,n\right)$处的函数值相等（都等于$x_j^k$），由定理1，等式两边的多项式相等。
+
+(2) 等式两边均为次数不超过$n$的多项式，$x_j\left(j=0,1,\dots,n\right)$处的函数值相等（都等于$0$），由定理1，等式两边的多项式相等。
+\newline
+
+8. 若$f\left(x\right)$在$\left[a,b\right]$上存在$n$阶导数，且节点$x_0,x_1,\dots,x_n\in \left[a,b\right]$，则满足
+$$f\left[x_0,x_1,\dots,x_n\right]=\frac{f^{\left(n\right)}\left(\xi\right)}{n!},\ \xi\in \left[a,b\right]$$
+由此得
+$$f\left[2^0,2^1,\dots,2^7\right]=\frac{f^{\left(7\right)}\left(\xi\right)}{7!}\left(\xi \in \left[2^0,2^7\right]\right) = 1$$
+$$f\left[2^0,2^1,\dots,2^8\right]=\frac{f^{\left(8\right)}\left(\xi\right)}{8!}\left(\xi \in \left[2^0,2^8\right]\right) = 0$$
+\newline
+
+9. 
+\[\begin{split}
+	\Delta\left(f_k g_k\right)&=f_{k+1} g_{k+1} - f_k g_k = f_{k+1} g_{k+1} + f_{k} g_{k+1} - f_{k} g_{k+1} - f_k g_k \\
+	&= f_k\left(g_{k+1}-g_k\right) + g_{k+1} \left(f_{k+1}-f_{k}\right)=f_k \Delta g_k+g_{k+1}\Delta f_k
+\end{split}\]
+\newline 
+
+10. 
+\[\begin{split}
+	\sum_{k=0}^{n-1}f_k\Delta g_k &= \sum_{k=0}^{n-1}f_k g_{k+1} - \sum_{k=0}^{n-1}f_k g_{k} \\
+	&=\sum_{k=0}^{n-2}f_k g_{k+1} + f_{n-1} g_n - \sum_{k=1}^{n-1}f_k g_{k} - f_0 g_0 \\
+	&=f_n g_n - f_0 g_0 + \left(f_{n-1} - f_n\right) g_n + \sum_{k=0}^{n-2}f_k g_{k+1} - \sum_{k=1}^{n-1}f_k g_{k} \\
+	&= f_n g_n - f_0 g_0 - \Delta f_{n-1} g_n + \sum_{k=0}^{n-2}f_k g_{k+1} - \sum_{k=0}^{n-2}f_{k+1} g_{k+1} \\
+  &= f_n g_n - f_0 g_0 - \sum_{k=0}^{n-1} g_{k+1} \Delta f_k \\
+\end{split}\]
+\newline 
+
+12. 因$x_1,x_2,\dots,x_n$是$f\left(x\right)$的$n$个不同实根，不妨设$f\left(x\right)=A\left(x-x_1\right)\dots\left(x-x_n\right)$。因此有
+\[f'\left(x_j\right)=A\prod_{i\ne j}\left(x-x_i\right)\]
+则有
+\[\sum_{j=1}^{n}\frac{x_j^k}{f'\left(x_j\right)}=\sum_{j=1}^{n}\frac{x_j^k}{A\prod_{i\ne j}\left(x-x_i\right)}\]
+令$g_k\left(x\right)=x^k$，则
+\[\begin{split}
+\sum_{j=1}^{n}\frac{x_j^k}{f'\left(x_j\right)}&=\frac{1}{A} g_k\left[x_1,x_2,\dots,x_n\right]\\
+&=\frac{1}{A} \frac{g^{\left(n-1\right)\left(\xi\right)}}{\left(n-1\right)!}\ \left(\xi \in \left[\min x_j, \max x_j\right],\ j=1,2,\dots,n\right)
+\end{split}\]
+因此，当$0\leq k\leq n-2$时，$\sum_{j=1}^{n}\frac{x_j^k}{f'\left(x_j\right)}=0$；
+当$k=n-1$时，$\sum_{j=1}^{n}\frac{x_j^k}{f'\left(x_j\right)}=\frac{1}{A}=a_n^{-1}$。
+
+\section{补充练习}
+
+1. 已知对于$k=0,1,2,\dots,n$成立$f\left(k\right)-\frac{k}{k+1}=0$，设$g\left(x\right)=f\left(x\right)\left(x+1\right)-x$，则$g\left(x\right)$为一个次数不超过$n+1$的多项式，且$k=0,1,2,\dots,n$为$g\left(x\right)$的$n+1$个零点。可设$g\left(x\right)=Ax\left(x-1\right)\dots\left(x-n\right)$。又知$g\left(-1\right)=1$，代入得
+\[g\left(-1\right)=-A\left(-1-1\right)\dots\left(-1-n\right)=1\ \Rightarrow\ A=\frac{\left(-1\right)^{n+1}}{\left(n+1\right)!}\]
+因此
+\[g\left(x\right)=\frac{\left(-1\right)^{n+1}}{\left(n+1\right)!}x\left(x-1\right)\dots\left(x-n\right)\]
+\[f\left(x\right)=\frac{g\left(x\right)+x}{x+1}=\frac{\frac{\left(-1\right)^{n+1}}{\left(n+1\right)!}x\left(x-1\right)\dots\left(x-n\right)+x}{x+1}\]
+\newline
+
+2. 首先考虑极端情形，若相邻两点之间的间距均为$h$，即
+$$x_{i+1}-x_i=h\left(i=0,1,2,\dots,n-1\right)$$
+下面首先证明此情形下的结论：\\
+由于结论只与$x_k$之间的相对位置有关，所以不妨设$x_0 = 0$。
+根据齐次性，不妨设$h = 1$（否则令$y = \frac{x}{h}$即可）。因此只需证明
+\[
+  x(x-1)\cdots(x-n) \le \frac{n!}{4}
+\]
+对于$n=1$的情况，根据均值不等式，成立，
+\[
+  |x(x-1)| = x(1-x) \le \frac{1}{4}.
+\]
+假设对于$n$的情况成立，考虑$n+1$的情况。若$x\in[0, n]$，则
+\[
+  |\left(x-x_0\right)\left(x-x_1\right)\dots\left(x-x_{n+1}\right)| \le \frac{n!}{4}\times(n+1-x) \le \frac{(n+1)!}{4}.
+\]
+若$x\in[n, n+1]$，结合$n=1$的情况，成立
+\[
+  |\left(x-x_0\right)\left(x-x_1\right)\dots\left(x-x_{n+1}\right)| \le (n+1)n(n-1)\cdots\frac{1}{4} = \frac{(n+1)!}{4}
+\]
+因此，相邻两点之间的间距均为$h$时结论成立。\\
+对于一般情况，$x_{i+1}-x_i\leq h\left(i=0,1,2,\dots,n-1\right)$，对于任意$x\in \left[x_0,x_n\right]$，不妨设$x\in\left[x_{k},x_{k+1}\right]$，则存在$x_0',x_1',\dots,x_{k}'$与$x_{k+1}',x_{k+2}',\dots,x_{n}'$满足：
+\[\begin{split}
+x_i'<x_i\ &\left(i=0,1,\dots,k\right) \\
+x_i'>x_i\ &\left(i=k+1,k+2,\dots,n\right) \\
+x_{i+1}'-x_i'=h\ &\left(i=0,1,2,\dots,n-1\right)
+\end{split}\]
+则有$|x-x_i|\leq|x-x_i'|\ \left(i=0,1,2,\dots,n\right)$
+\[|\left(x-x_0\right)\left(x-x_1\right)\dots\left(x-x_n\right)|\leq|\left(x-x_0'\right)\left(x-x_1'\right)\dots\left(x-x_n'\right)|\leq \frac{n!h^{n+1}}{4}
+\]
+
+\end{document}

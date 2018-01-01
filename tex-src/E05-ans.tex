@@ -1,0 +1,148 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{ctex}
+
+\usepackage{float}
+\usepackage[super, square]{natbib}
+\usepackage[margin = 1in]{geometry}
+\usepackage{
+  color,
+  clrscode,
+  amssymb,
+  ntheorem,
+  amsmath,
+  listings,
+  fontspec,
+  xcolor,
+  supertabular,
+  multirow
+}
+\definecolor{bgGray}{RGB}{36, 36, 36}
+\usepackage[
+  colorlinks,
+  linkcolor=bgGray,
+  anchorcolor=blue,
+  citecolor=black
+]{hyperref}
+\newfontfamily\courier{Courier}
+
+\theoremstyle{margin}
+\theorembodyfont{\normalfont}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\st}{\text{s.t.}}
+\newcommand{\mn}{\mathnormal}
+\newcommand{\tbf}{\textbf}
+\newcommand{\fl}{\mathnormal{fl}}
+\newcommand{\f}{\mathnormal{f}}
+\newcommand{\g}{\mathnormal{g}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\JD}{\textbf{D}}
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\str}{^*}
+\newcommand{\vep}{\varepsilon}
+\newcommand{\lhs}{\text{L.H.S}}
+\newcommand{\rhs}{\text{R.H.S}}
+\newcommand{\con}{\text{Const}}
+\newcommand{\oneton}{1,\,2,\,\dots,\,n}
+\newcommand{\aoneton}{a_1a_2\dots a_n}
+\newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
+
+
+\title{科学计算 Exercise 5}
+\author{范舟\\516030910574\\致远学院2016级ACM班}
+\date{}
+
+\begin{document}
+
+\lstset{numbers=left,
+  basicstyle=\scriptsize\courier,
+  numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+  language=C++,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+1. \textbf{证明： } 假设在$[a, b]$上$f\not\equiv0$，则$\exists x_0 \in [a, b], f(x_0) \neq 0$，不妨设$f(x_0) < 0$，因为$f \in C[a, b]$，存在$\delta > 0$，使得
+\[f(x) < 0, \quad \forall x \in (x_0 - \delta, x_0 + \delta)\]
+取$g$为
+\[g(x)=
+\begin{cases}
+[x - (x_0 - \delta)]^3 [x - (x_0 + \delta)]^3, \quad & x \in (x_0 - \delta, x_0 + \delta) \\
+0, \quad & x \in [a, x_0 - \delta] \cup [x_0 + \delta, b]
+\end{cases}
+\]
+则有$g \in C^{2}_{0}[a, b]$，且
+\[\quad g(x) < 0, \quad \forall x \in (x_0 - \delta, x_0 + \delta)\]
+因此
+\[\int_{a}^{b}f(x)g(x)\mathrm{d}x = \int_{x_0 - \delta}^{x_0 + \delta}f(x)g(x)\mathrm{d}x > 0\]
+与$\int_{a}^{b}f(x)g(x)\mathrm{d}x = 0$矛盾，因此在$[a, b]$上$f \equiv 0$.
+\newline
+
+2. \textbf{证明： } 假设此变分问题有解$y^{*} = f^{*}(x)$，根据守恒律定理，沿着曲线$y^{*} = f^{*}(x)$，成立
+\[H = f'\frac{\partial L}{\partial f'} - L = Constant\]
+其中
+\[L(x, f, f') = x^2\big(f'(x)\big)^2\]
+则有
+\[H = f'(x) \times 2x^2f'(x) - x^2\big(f'(x)\big)^2 = x^2\big(f'(x)\big)^2 = Constant\]
+代入$x = 0$得$H \equiv 0$，则有
+\[f'(x) = 0, \quad \forall x \in [-1, 1], x \ne 0\]
+又因为$f \in C^{1}[-1, 1]$，$f'(0) = 0$，即
+\[f'(x) = 0, \quad \forall x \in [-1, 1]\]
+则$f(x)$是$[-1, 1]$上的常数函数，与$f(-1) = -1, f(1) = 1$矛盾，因此此变分问题无解.
+\newline
+
+3. \textbf{解: }
+\[y(1 + (\frac{\mathrm{d}y}{\mathrm{d}x})^2) = c \Rightarrow \frac{\mathrm{d}y}{\mathrm{d}x} = \sqrt{\frac{c}{y} - 1} \Rightarrow \mathrm{d}x = \sqrt{\frac{y}{c - y}} \mathrm{d}y\]
+已知$y(0) = 0$，两边积分得
+\[\int_{0}^{x} \mathrm{d}t = \int_{y(0)}^{y(x)} \sqrt{\frac{t}{c - t}} \mathrm{d}t \Rightarrow x = \int_{0}^{y}\sqrt{\frac{t}{c-t}} \mathrm{d}t\]
+令$p = \sqrt{\frac{t}{c - t}}$，则$t = \frac{cp^2}{1 + p^2}$，得
+\[x = \int_{0}^{\sqrt{\frac{y}{c - y}}} p \mathrm{d}\Big(\frac{cp^2}{1 + p^2}\Big) = \int_{0}^{\sqrt{\frac{y}{c - y}}} \frac{2cp^2}{(1 + p^2)^2} \mathrm{d}p = 2c \int_{0}^{\sqrt{\frac{y}{c - y}}} \frac{p^2}{(1 + p^2)^2} \mathrm{d}p\]
+令$p = \tan \theta$，得
+\[x = 2c \int_{0}^{\arctan \sqrt{\frac{y}{c - y}}} \frac{\tan^2 \theta}{\sec^4 \theta} \sec^2 \theta \mathrm{d}\theta = 2c \int_{0}^{\arctan \sqrt{\frac{y}{c - y}}} \sin^2 \theta \mathrm{d}\theta\]
+令$\theta = \frac{\alpha}{2}$，得
+\[x = \frac{c}{2} \int_{0}^{2 \arctan{\sqrt{\frac{y}{c - y}}}} (1 - \cos \alpha) \mathrm{d}\alpha = c \arctan{\sqrt{\frac{y}{c - y}}} - \frac{c}{2}\sin{(2\arctan{\sqrt{\frac{y}{c - y}}})}\]
+已知$y(x_1) = y_1$，有
+\[x_1 = c \arctan{\sqrt{\frac{y_1}{c - y_1}}} - \frac{c}{2}\sin{(2\arctan{\sqrt{\frac{y_1}{c - y_1}}})}\]
+由此可确定常数$c$.
+\newline
+
+4. \textbf{解: } 不妨假设$f(0) = \tilde y_0, f(1) = \tilde y_n$，分别定义数据保真项与正则化项
+\[J_1(f) = \sum_{i = 1}^{n - 1} \frac{h_{i} + h_{i + 1}}{2}[\tilde y_i - f(x_i)]^2, \quad J_2(f) = \int_{0}^{1} \big(f'(x)\big)^2 \mathrm{d}x\]
+其中
+\[h_i = x_i - x_{i - 1}, \quad 1 \le i \le n\]
+所求最优化函数为
+\[J(f) = J_1(f) + \alpha J_2(f), \quad f_* = \arg \min_{f} J(f)\]
+$\forall \eta \in K_0, \varepsilon \in R$，$J(f)$在$f_*$处沿$\eta$的方向导数为
+\[\frac{\mathrm{d}}{\mathrm{d}\varepsilon}J(f_* + \varepsilon\eta) = -2 \sum_{i = 1}^{n - 1} \frac{h_{i} + h_{i + 1}}{2}[\tilde y_i - f_*(x_i) - \varepsilon\eta(x_i)]\eta(x_i) + 2\alpha \int_{0}^{1} [f_*'(x) + \varepsilon\eta'(x)]\eta'(x) \mathrm{d}x\]
+在$\varepsilon = 0$处有$\frac{\mathrm{d}}{\mathrm{d}\varepsilon}J(f^* + \varepsilon\eta) = 0$，即
+\[-2 \sum_{i = 1}^{n - 1} \frac{h_{i} + h_{i + 1}}{2}[\tilde y_i - f_*(x_i)]\eta(x_i) + 2\alpha \int_{0}^{1} f_*'(x)\eta'(x) \mathrm{d}x = 0\]
+下面通过选取合适的$\eta$导出$f_*$满足的条件.
+\paragraph{Step 1} 对于每个区间$[x_{k - 1}, x_k]$，取$\eta \in C_{0}^{\infty}(x_{k - 1}, x_k)$（定义在$[0, 1]$上，在$(x_{k - 1}, x_k)$的各阶导数都有紧支集），则有
+\[\int_{x_{k - 1}}^{x_{k}} f_*'(x)\eta'(x) \mathrm{d}x = 0\]
+分部积分得
+\[\int_{x_{k - 1}}^{x_{k}} f_*'(x)\eta'(x) \mathrm{d}x = f_*'(x)\eta(x) \bigg|_{x_{k-1}}^{x_{k}} - \int_{x_{k - 1}}^{x_{k}} f_*''(x)\eta(x) \mathrm{d}x = \int_{x_{k - 1}}^{x_{k}} f_*''(x)\eta(x) \mathrm{d}x = 0\]
+$\eta$在$K_0[x_{k - 1}, x_{k}]$中有任意性，根据变分引理，得
+\[f_*''(x) \equiv 0 \Rightarrow f_* \in P_1, \quad x \in [x_{k - 1}, x_{k}]\]
+因此$f_*$是分段线性函数. 
+\paragraph{Step 2} 再取$g \in C^{\infty}[0, 1] \cap K_0$，分部积分有
+\[\begin{split}
+& \int_{0}^{1} f_*'(x)\eta'(x) \rd x \\
+& = \sum_{i = 1}^{n} \int_{x_{i - 1}}^{x_{i}} f_*'(x)\eta'(x) \rd x = \sum_{i = 1}^{n} \bigg(f_*'(x)\eta(x) \bigg|_{x_{i - 1}}^{x_i} - \int_{x_{i - 1}}^{x_{i}} f_*''(x)\eta(x) \rd x\bigg) \\
+& = \sum_{i = 1}^{n - 1} [f_*'(x_i-) - f_*'(x_i+)]\eta(x_i) + f_*'(1)\eta(1) - f_*'(0)\eta(0) \\
+& = \sum_{i = 1}^{n - 1} [f_*'(x_i-) - f_*'(x_i+)]\eta(x_i)
+\end{split}\]
+与下式比较各项系数
+\[-2 \sum_{i = 1}^{n - 1} \frac{h_{i} + h_{i + 1}}{2}[\tilde y_i - f_*(x_i)]\eta(x_i) + 2\alpha \int_{0}^{1} f_*'(x)\eta'(x) \mathrm{d}x = 0\]
+得
+\[\alpha[f_*'(x_i-) - f_*'(x_i+)] = \frac{h_{i} + h_{i + 1}}{2}[\tilde y_i - f_*(x_i)]\]
+则$f_*$为满足此条件的分段线性函数，且满足$f(0) = \tilde y_0, f(1) = \tilde y_n$.
+\end{document}

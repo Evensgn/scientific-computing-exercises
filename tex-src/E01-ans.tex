@@ -1,0 +1,148 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{ctex}
+
+\usepackage{float}
+\usepackage[super, square]{natbib}
+\usepackage[margin = 1in]{geometry}
+\usepackage{
+  color,
+  clrscode,
+  amssymb,
+  ntheorem,
+  amsmath,
+  listings,
+  fontspec,
+  xcolor,
+  supertabular,
+  multirow
+}
+\definecolor{bgGray}{RGB}{36, 36, 36}
+\usepackage[
+  colorlinks,
+  linkcolor=bgGray,
+  anchorcolor=blue,
+  citecolor=black
+]{hyperref}
+\newfontfamily\courier{Courier}
+
+\theoremstyle{margin}
+\theorembodyfont{\normalfont}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\st}{\text{s.t.}}
+\newcommand{\mn}{\mathnormal}
+\newcommand{\tbf}{\textbf}
+\newcommand{\fl}{\mathnormal{fl}}
+\newcommand{\f}{\mathnormal{f}}
+\newcommand{\g}{\mathnormal{g}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\JD}{\textbf{D}}
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\str}{^*}
+\newcommand{\vep}{\varepsilon}
+\newcommand{\lhs}{\text{L.H.S}}
+\newcommand{\rhs}{\text{R.H.S}}
+\newcommand{\con}{\text{Const}}
+\newcommand{\oneton}{1,\,2,\,\dots,\,n}
+\newcommand{\aoneton}{a_1a_2\dots a_n}
+\newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
+
+
+\title{科学计算 Exercise 1}
+\author{范舟\\516030910574\\致远学院2016级ACM班}
+\date{}
+
+\begin{document}
+
+\lstset{numbers=left,
+  basicstyle=\scriptsize\courier,
+  numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+  language=C++,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+1、 
+
+(1) 由均值不等式 
+$$x_{k+1}=\frac{1}{2}\left(x_k+\frac{7}{x_k}\right)\geq\sqrt{7}$$
+又有$x_0=2$，因此$x_k\geq\sqrt{7}$。
+$$x_{k+1}-x_k=\frac{1}{2}\left(\frac{7}{x_k}-x_k\right)\leq\frac{1}{2}\left(\sqrt{7}-x_k\right)\leq0$$
+因此$\{x_k\}$单调递减。
+$\{x_k\}$单调递减有下界一定收敛，设其极限为$x^{\ast}$。\\
+对递推公式 
+$$x_{k+1}=\frac{1}{2}\left(x_k+\frac{7}{x_k}\right)$$
+两边取极限得 
+$$x^{\ast}=\frac{1}{2}\left(x^{\ast}+\frac{7}{x^{\ast}}\right) \Rightarrow x^{\ast}=\sqrt{7}$$
+
+(2) 记$e_k=x_k-\sqrt{7}$，则有
+$$e_{k+1}=x_{k+1}-\sqrt{7}
+=\frac{1}{2}\left(x_k+\frac{7}{x_k}-2\sqrt{7}\right)
+=\frac{x_k^2-2\sqrt{7}x_k+7}{2x_k}
+=\frac{\left(x_k-\sqrt{7}\right)^2}{2x_k}=\frac{e_k^2}{2x_k}$$
+若$x_k$是$\sqrt{7}$有$n$位有效数字的近似值，则$x_k=0.a_1a_2a_3\dots a_n \dots\times 10$
+$$e_k=0.a_1a_2a_3\dots a_n \dots-\sqrt{7}\leq \frac{1}{2}\times10^{-n}\times 10=\frac{1}{2}\times10^{1-n}$$
+$$e_{k+1}=\frac{e_k^2}{2x_k}\leq\frac{\frac{1}{4}\times10^{2-2n}}{2\sqrt{7}}=\frac{10^{2-2n}}{8\sqrt{7}}<\frac{1}{2}\times10^{1-2n}$$
+因此$x_{k+1}$至少是$\sqrt{7}$的具至少$2n$位有效数字的近似值。
+\newline
+
+2、 可将运算的误差估计为
+$$\varepsilon\left(f\left(x^{\ast}\right)\right)\approx |f^{'}\left(x^{\ast}\right)|\varepsilon\left(x^{\ast}\right)$$
+对以下函数
+$$f_1=\left(x-1\right)^6,f_2=\left(3-2x\right)^3,f_3=99-70x,f_4=\frac{1}{\left(1+x\right)^6},f_5=\frac{1}{\left(3+2x\right)^3},f_6=\frac{1}{99+70x}$$
+分别在$x=1.4$处求导得
+$$f_1^{'}\left(1.4\right)=0.06144,f_2^{'}\left(1.4\right)=-0.24,f_3^{'}\left(1.4\right)=-70$$
+$$f_4^{'}\left(1.4\right)=-0.013082,f_5^{'}\left(1.4\right)=-0.00530199,f_6^{'}\left(1.4\right)=-0.00180371$$
+因此使用$\frac{1}{99+70\sqrt{2}}$计算最精确。
+\newline
+
+3、 
+
+(1)
+$$\frac{1}{1+2x}-\frac{1-x}{1+x}=\frac{1+x-\left(1-x\right)\left(1+2x\right)}{\left(1+2x\right)\left(1+x\right)}=\frac{2x^2}{\left(1+2x\right)\left(1+x\right)}$$
+
+(2)
+$$\sqrt{x+\frac{1}{x}}-\sqrt{x-\frac{1}{x}}=\frac{\left(x+\frac{1}{x}\right)-\left(x-\frac{1}{x}\right)}{\sqrt{x+\frac{1}{x}}+\sqrt{x-\frac{1}{x}}}=\frac{2}{x\left(\sqrt{x+\frac{1}{x}}+\sqrt{x-\frac{1}{x}}\right)}$$
+\newline
+
+4、
+
+方法1 
+
+对$\cos x$进行Taylor展开得
+$$f\left(x\right)=\frac{1-\cos x}{x^2}=\frac{1-\left(1+\sum_{k=1}^{n}\frac{\left(-1\right)^{k}x^{2k}}{\left(2k\right)!}+O\left(x^{2n+1}\right)\right)}{x^2}=\frac{1}{2}-\sum_{k=2}^{n}\frac{\left(-1\right)^{k}x^{2k-2}}{\left(2k\right)!}+O\left(x^{2n-1}\right)$$
+
+方法2
+
+$$f\left(x\right)=\frac{1-\cos x}{x^2}=\frac{2\sin^2 \frac{x}{2}}{x^2}$$
+对$\sin \frac{x}{2}$进行Taylor展开，得
+$$f\left(x\right)=\frac{2}{x^2}\left(\sum_{k=1}^{n}\frac{\left(-1\right)^{k+1}\left(\frac{x}{2}\right)^{2k-1}}{\left(2k-1\right)!}+O\left(x^{2n}\right)\right)^2=\frac{1}{2}\left(\sum_{k=1}^{n}\frac{\left(-1\right)^{k+1}\left(\frac{x}{2}\right)^{2k-3}}{\left(2k-1\right)!}+O\left(x^{2n-2}\right)\right)^2$$
+\newline
+
+5、 记$\varepsilon_0=|27.982-\sqrt{783}|$,根据四则运算的误差估计
+$$\varepsilon \left(x^{\ast}\pm y^{\ast}\right)\leq \varepsilon_x^{\ast}+\varepsilon_y^{\ast}$$
+$$\varepsilon \left(x^{\ast}y^{\ast}\right)\leq |x^{\ast}|\varepsilon_y^{\ast}+|y^{\ast}|\varepsilon_x^{\ast}$$
+$$\varepsilon \left(\frac{x^{\ast}}{y^{\ast}}\right)\leq \frac{|x^{\ast}|\varepsilon_y^{\ast}+|y^{\ast}|\varepsilon_x^{\ast}}{|y^{\ast}|^2}$$
+按照$Y_n=Y_{n-1}-\frac{1}{100}\sqrt{783}$计算$Y_{100}$的误差约为
+$$\varepsilon_{100}=100\times \frac{100\times \varepsilon_0}{100^2}=\varepsilon_0$$
+按照$Y_n=2Y_{n-1}-\frac{1}{100}\sqrt{783}$计算误差满足
+$$\varepsilon_n=2\varepsilon_{n-1}+\frac{100\times \varepsilon_0}{100^2}$$
+据此递推公式求得
+$$\varepsilon_{100}= \frac{2^{100}-1}{100}\varepsilon_0$$
+\newline
+
+6、 设计算大小为$a\times b$的矩阵$P$与$b\times c$的矩阵$Q$相乘的代价为$C\left(P, Q\right)=O\left(abc\right)$，另外将计算$B_{l,r}=\prod_{k=l}^{r}A_k$的最小代价记作$F\left(l,r\right)$。 \\
+则有如下递归转移方程
+$$F\left(l,r\right)=\min_{l\leq i<r}\{F\left(l,i\right)+F\left(i+1,r\right)+C\left(B_{l,i},B_{i+1,r}\right)\}$$
+特别地，若$l=r$，$F\left(l,r\right)=0$。\\
+根据上述递归转移方程，可得求解$F\left(1,n\right)$的递归算法，按照递归时最优的转移方案即得计算$A=\prod_{k=1}^{n}A_k$的最优顺序。
+\end{document}

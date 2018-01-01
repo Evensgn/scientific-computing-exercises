@@ -1,0 +1,275 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{ctex}
+
+\usepackage{listings}
+\usepackage{xcolor}
+\lstset{
+    columns=fixed,       
+    numbers=left,                                        % 在左侧显示行号
+    frame=none,                                          % 不显示背景边框
+    backgroundcolor=\color[RGB]{245,245,244},            % 设定背景颜色
+    keywordstyle=\color[RGB]{40,40,255},                 % 设定关键字颜色
+    numberstyle=\footnotesize\color{darkgray},           % 设定行号格式
+    commentstyle=\it\color[RGB]{0,96,96},                % 设置代码注释的格式
+    stringstyle=\rmfamily\slshape\color[RGB]{128,0,0},   % 设置字符串格式
+    showstringspaces=false,                              % 不显示字符串中的空格
+    language=Matlab,                                        % 设置语言
+}
+
+\usepackage{float}
+\usepackage[super, square]{natbib}
+\usepackage[margin = 1in]{geometry}
+\usepackage{
+  color,
+  clrscode,
+  amssymb,
+  ntheorem,
+  amsmath,
+  listings,
+  fontspec,
+  xcolor,
+  supertabular,
+  multirow
+}
+\definecolor{bgGray}{RGB}{36, 36, 36}
+\usepackage[
+  colorlinks,
+  linkcolor=bgGray,
+  anchorcolor=blue,
+  citecolor=black
+]{hyperref}
+\newfontfamily\courier{Courier}
+
+\theoremstyle{margin}
+\theorembodyfont{\normalfont}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\st}{\text{s.t.}}
+\newcommand{\mn}{\mathnormal}
+\newcommand{\tbf}{\textbf}
+\newcommand{\fl}{\mathnormal{fl}}
+\newcommand{\f}{\mathnormal{f}}
+\newcommand{\g}{\mathnormal{g}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\JD}{\textbf{D}}
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\str}{^*}
+\newcommand{\vep}{\varepsilon}
+\newcommand{\lhs}{\text{L.H.S}}
+\newcommand{\rhs}{\text{R.H.S}}
+\newcommand{\con}{\text{Const}}
+\newcommand{\oneton}{1,\,2,\,\dots,\,n}
+\newcommand{\aoneton}{a_1a_2\dots a_n}
+\newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
+
+
+\title{科学计算 Exercise 3}
+\author{范舟\\516030910574\\致远学院2016级ACM班}
+\date{}
+
+\begin{document}
+
+\lstset{
+	numbers=left,
+	basicstyle=\scriptsize\courier,
+	numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+	language=Matlab,
+	breaklines=true,
+	keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+	morekeywords={},
+	stringstyle=\color{purple},
+	frame=shadowbox,
+	rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+\section{教材练习 P49-50}
+
+13. 解：由于次数不超过三次的多项式$P\left(x\right)$通过点$\left(x_0, f\left(x_0\right)\right),\left(x_1, f\left(x_1\right)\right)$，可设
+\[P\left(x\right)=f\left(x_0\right)+f\left[x_0,x_1\right]\left(x-x_0\right)+A\left(x-x_0\right)\left(x-x_1\right)+B\left(x-x_0\right)^2\left(x-x_1\right)\]
+又有
+\[\begin{split}
+	P'\left(x_0\right)&=f\left[x_0,x_1\right]+A\left(x_0-x_1\right)=f'\left(x_0\right) \\
+	P''\left(x_0\right)&=2A+2B\left(x_0-x_1\right)=f''\left(x_0\right)
+\end{split}\]
+解得
+\[\begin{split}
+	A&=\frac{f'\left(x_0\right)-f\left[x_0,x_1\right]}{x_0-x_1} \\
+	&=\frac{f'\left(x_0\right)\left(x_0-x_1\right)+f\left(x_1\right)-f\left(x_0\right)}{\left(x_0-x_1\right)^2} \\
+	B&=\frac{f''\left(x_0\right)\left(x_0-x_1\right)+2f\left[x_0,x_1\right]-2f'\left(x_0\right)}{2\left(x_0-x_1\right)^2} \\
+	&=\frac{f''\left(x_0\right)\left(x_0-x_1\right)^2-2f'\left(x_0\right)\left(x_0-x_1\right)+2f\left(x_0\right)-2f\left(x_1\right)}{2\left(x_0-x_1\right)^3}
+\end{split}\]
+因此
+\[\begin{split}
+	P\left(x\right)&=f\left(x_0\right)+\frac{f\left(x_1\right)-f\left(x_0\right)}{x_1-x_0}\left(x-x_0\right) \\
+	&+\frac{f'\left(x_0\right)\left(x_0-x_1\right)+f\left(x_1\right)-f\left(x_0\right)}{\left(x_0-x_1\right)^2}\left(x-x_0\right)\left(x-x_1\right) \\
+	&+\frac{f''\left(x_0\right)\left(x_0-x_1\right)^2-2f'\left(x_0\right)\left(x_0-x_1\right)+2f\left(x_0\right)-2f\left(x_1\right)}{2\left(x_0-x_1\right)^3}\left(x-x_0\right)^2\left(x-x_1\right)
+\end{split}\]
+\newline
+
+15. 证明：可设$[x_k,x_{k+1}]$间的插值余项为
+\[R_3 (x)=f(x)-P(x)=k(x)(x-x_k)^2(x-x_{k+1})^2\]
+其中$k(x)$为待定函数，固定$x\in[x_k,x_{k+1}]$，构造
+\[\phi(t)=f(t)-P(t)-k(x)(t-x_k)^2(t-x_{k+1})^2\]
+显然有$\phi(x_k)=\phi(x_{k+1})=\phi(x)=0$，且$\phi'(x_k)=\phi'(x_{k+1})=0$，因此在$\phi(t)$在$[x_k,x_{k+1}]$中至少有$5$个零点（二重根算两个）.反复应用罗尔定理，可得$\phi^{(4)}(t)$在$(x_k,x_{k+1})$中至少有一个零点，不妨设其为$\xi$，则有
+\[\phi^{(4)}(\xi)=f^{(4)}(\xi)-4!k(x)=0\]
+即得到
+\[\begin{split}
+	k(x)&=\frac{f^{(4)}(\xi)}{4!},\ \xi\in(x_k,x_{k+1}) \\
+	R_3 (x)&=\frac{f^{(4)}(\xi)}{4!}(x-x_k)^2(x-x_{k+1})^2
+\end{split}\]
+设$h_k=x_{k+1}-x_k,h=\max h_k,M=\sup f^{(4)}$，则分段三次埃尔米特插值的误差
+\[R_3 (x)=\frac{f^{(4)}(\xi)}{4!}(x-x_k)^2(x-x_{k+1})^2 \le \frac{M}{4!}\frac{h^4}{16}=\frac{Mh^4}{384}\]
+因此分段三次埃尔米特插值的误差限为$\frac{Mh^4}{384}$.
+\newline
+
+2. 画出的插值图像如下图.
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[height=14cm]{ex3_pic1.png}
+  \end{center}
+\end{figure}
+Matlab代码：
+\begin{lstlisting}
+x_10 = -1 : (1 - -1) / 10 : 1;
+x_20 = -1 : (1 - -1) / 20 : 1;
+f_10 = f(x_10);
+f_20 = f(x_20);
+
+x_plot = -1 : (1 - -1) / 500 : 1;
+f_plot = f(x_plot);
+
+subplot(2, 2, 1);
+plot(x_plot, f_plot, 'b', 'LineWidth', 1);
+hold;
+y1_plot = newton(x_10, f_10, x_plot);
+plot(x_plot, y1_plot, 'r', 'LineWidth', 1);
+title('n = 10, Polynomial');
+box off;
+
+subplot(2, 2, 2);
+plot(x_plot, f_plot, 'b', 'LineWidth', 1);
+hold;
+y2_plot = newton(x_20, f_20, x_plot);
+plot(x_plot, y2_plot, 'r', 'LineWidth', 1);
+title('n = 20, Polynomial');
+box off;
+
+subplot(2, 2, 3);
+plot(x_plot, f_plot, 'b', 'LineWidth', 1);
+hold;
+y1_plot = spline(x_10, f_10, x_plot);
+plot(x_plot, y1_plot, 'r', 'LineWidth', 1);
+title('n = 10, Cubic Spline');
+box off;
+
+subplot(2, 2, 4);
+plot(x_plot, f_plot, 'b', 'LineWidth', 1);
+hold;
+y2_plot = spline(x_20, f_20, x_plot);
+plot(x_plot, y2_plot, 'r', 'LineWidth', 1);
+title('n = 20, Cubic Spline');
+box off;
+
+function ret = f(x)
+    ret = 1 ./ (1 + 25 * x .^ 2);
+end
+
+function yq = newton(x, y, xq)
+    n = length(x);
+    d(:, 1) = y;
+    for i = 2 : n
+        dx(i : n) = x(i : n) - x(1 : n - i + 1);
+        d(i : n, i) = (d(i : n, i - 1) - d(i - 1 : n - 1, i - 1)) ./ dx(i : n)';
+        a(i) = d(i, i);
+    end
+    yq = calc(a, x, xq);
+    function y = calc(a, x, xq)
+        n = length(x);
+        y = 0;
+        for i = 1 : n
+            t = a(i);
+            for j = 1 : i - 1
+                t = t .* (xq - x(j));
+            end
+            y = y + t;
+        end
+    end
+end
+\end{lstlisting}
+
+\section{补充练习}
+
+1. 下面的这段Matlab代码中，spline\_zhou()这个函数实现了三种边界条件的三次样条插值，函数的调用方式请见代码开头的注释：
+\begin{lstlisting}
+% function spline_zhou(), code by Zhou Fan
+% Cubic Spline Interpolation under three classes of end conditions
+% Usage:
+%   condition (1): yq = spline_zhou(x, y, xq, 1, [a, b]);
+%   condition (2): yq = spline_zhou(x, y, xq, 2, [a, b]);
+%   condition (3): yq = spline_zhou(x, y, xq, 3, []);
+
+function yq = spline_zhou(x, y, xq, cond_type, cond_v)
+    n = length(x);
+    h(1 : n - 1) = x(2 : n) - x(1 : n - 1);
+    mu(2 : n - 1) = h(1 : n - 2) ./ (h(1 : n - 2) + h(2 : n - 1));
+    lambda(2 : n - 1) = h(2 : n - 1) ./ (h(1 : n - 2) + h(2 : n - 1));
+    d1_f(2 : n) = (y(2 : n) - y(1 : n - 1)) ./ h(1 : n - 1);
+    d2_f(3 : n) = (d1_f(3 : n) - d1_f(2 : n - 1)) ./ (h(1 : n - 2) + h(2 : n - 1));
+    d(2 : n - 1) = 6 * d2_f(3 : n);
+    
+    switch cond_type
+        case 1
+            lambda(1) = 1;
+            d(1) = 6 / h(1) * (d1_f(2) - cond_v(1));
+            mu(n) = 1;
+            d(n) = 6 / h(n - 1) * (cond_v(2) - d1_f(n));
+        case 2
+            lambda(1) = 0;
+            mu(n) = 0;
+            d(1) = 2 * cond_v(1);
+            d(n) = 2 * cond_v(2);
+        case 3
+            lambda(n) = h(1) / (h(n - 1) + h(1));
+            mu(n) = 1 - lambda(n);
+            d(n) = 6 * (d1_f(2) - d1_f(n)) / (h(1) + h(n - 1));
+            d(1) = 0;
+        otherwise
+            throw(MException('Zhou:invalidArgument', 'Invalid argument for function spline_zhou'));
+    end
+    
+    if cond_type <= 2
+        A = 2 * eye(n);
+        A = A + [zeros(n - 1, 1), lambda(1 : n - 1) .* eye(n - 1); zeros(1, n)];
+        A = A + [zeros(1, n); mu(2 : n) .* eye(n - 1), zeros(n - 1, 1)];
+    else
+        B = 2 * eye(n - 1);
+        B = B + [zeros(n - 2, 1), lambda(2 : n - 1) .* eye(n - 2); zeros(1, n - 1)];
+        B = B + [zeros(1, n - 1); mu(3 : n) .* eye(n - 2), zeros(n - 2, 1)];
+        B(1, n - 1) = mu(2);
+        B(n - 1, 1) = lambda(n);
+        A = [zeros(1, n); zeros(n - 1, 1), B];
+        A(1, 1) = 1;
+        A(1, n) = -1;
+    end
+    
+    M = (A \ d')';
+    j = discretize(xq, x);
+    yq = M(j) .* (x(j + 1) - xq) .^ 3 ./ (6 * h(j)) + M(j + 1) .* (xq - x(j)) .^ 3 ./ (6 * h(j)) ...
+        + (y(j) - M(j) .* h(j) .^ 2 ./ 6) .* (x(j + 1) - xq) ./ h(j) ...
+        + (y(j + 1) - M(j + 1) .* h(j) .^ 2 ./ 6) .* (xq - x(j)) ./ h(j);
+end
+\end{lstlisting}
+使用spline\_zhou()对上一道题目中的函数分别进行三种条件下的三次样条插值（取$n=10$），得到的图像如下.
+\begin{figure}[H]
+  \begin{center}
+    \includegraphics[height=4cm]{ex3_pic2.png}
+  \end{center}
+\end{figure}
+可以看到，在三种边界条件下，三次样条插值的效果都很好。
+
+\end{document}

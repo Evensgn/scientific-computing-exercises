@@ -1,0 +1,120 @@
+\documentclass[12pt, a4paper]{article}
+\usepackage{ctex}
+
+\usepackage{float}
+\usepackage[super, square]{natbib}
+\usepackage[margin = 1in]{geometry}
+\usepackage{
+  color,
+  clrscode,
+  amssymb,
+  ntheorem,
+  amsmath,
+  listings,
+  fontspec,
+  xcolor,
+  supertabular,
+  multirow
+}
+\definecolor{bgGray}{RGB}{36, 36, 36}
+\usepackage[
+  colorlinks,
+  linkcolor=bgGray,
+  anchorcolor=blue,
+  citecolor=black
+]{hyperref}
+\newfontfamily\courier{Courier}
+
+\theoremstyle{margin}
+\theorembodyfont{\norm  alfont}
+
+\newtheorem{theorem}{Theorem}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+
+\newcommand{\st}{\text{s.t.}}
+\newcommand{\mn}{\mathnormal}
+\newcommand{\tbf}{\textbf}
+\newcommand{\fl}{\mathnormal{fl}}
+\newcommand{\f}{\mathnormal{f}}
+\newcommand{\g}{\mathnormal{g}}
+\newcommand{\R}{\mathbf{R}}
+\newcommand{\Q}{\mathbf{Q}}
+\newcommand{\JD}{\textbf{D}}
+\newcommand{\rd}{\mathrm{d}}
+\newcommand{\str}{^*}
+\newcommand{\vep}{\varepsilon}
+\newcommand{\lhs}{\text{L.H.S}}
+\newcommand{\rhs}{\text{R.H.S}}
+\newcommand{\con}{\text{Const}}
+\newcommand{\oneton}{1,\,2,\,\dots,\,n}
+\newcommand{\aoneton}{a_1a_2\dots a_n}
+\newcommand{\xoneton}{x_1,\,x_2,\,\dots,\,x_n}
+
+
+\title{科学计算 Exercise 06c}
+\author{范舟\\516030910574\\致远学院2016级ACM班}
+\date{}
+
+\begin{document}
+
+\lstset{numbers=left,
+  basicstyle=\scriptsize\courier,
+  numberstyle=\tiny\courier\color{red!89!green!36!blue!36},
+  language=C++,
+  breaklines=true,
+  keywordstyle=\color{blue!70},commentstyle=\color{red!50!green!50!blue!50},
+  morekeywords={},
+  stringstyle=\color{purple},
+  frame=shadowbox,
+  rulesepcolor=\color{red!20!green!20!blue!20}
+}
+\maketitle
+
+1. \paragraph{解:} 高斯-勒让德公式为
+\[\int_{-1}^{1} f(x) \rd x \approx \sum_{k = 0}^{n} A_k f(x_k)\]
+将原积分转化为$[-1, 1]$区间上的积分
+\[\int_{1}^{3} e^x \sin{x} \rd x = \int_{-1}^{1} e^{x + 2} \sin{(x + 2)} \rd x\]
+$n = 2$时，有
+\[\begin{split}
+& x_0 = -0.7745967, x_1 = 0, x_2 = 0.7745967 \\
+& A_0 = 0.5555556, A_1 = 0.8888889, A_2 = 0.5555556
+\end{split}\]
+函数在各高斯点的取值为
+\[\begin{cases}
+f(x_0) = 3.204416487 \\
+f(x_1) = 6.718849697 \\
+f(x_2) = 5.752548197
+\end{cases}\]
+代入高斯-勒让德公式，得
+\[I \approx \sum_{k = 0}^{2} A_k f(x_k) = 10.94840\]
+$n = 3$时，有
+\[\begin{split}
+& x_0 = -0.8611363, x_1 = -0.3399810, x_2 = 0.3399810, x_3 = 0.8611363 \\
+& A_0 = 0.3478548, A_1 = 0.6521452, A_2 = 0.6521452, A_3 = 0.3478548
+\end{split}\]
+函数在各高斯点的取值为
+\[\begin{cases}
+f(x_0) = 2.836376140 \\
+f(x_1) = 5.238490398 \\
+f(x_2) = 7.458548459 \\
+f(x_3) = 4.838744537
+\end{cases}\]
+代入高斯-勒让德公式，得
+\[I \approx \sum_{k = 0}^{3} A_k f(x_k) = 10.95014\]
+\newline 
+
+2. \paragraph{解:} 由题目条件计算得
+\[a = 7782.5, \quad b = 972.5\]
+由于给定的数据精度为$1 \mathrm{km}$，只需在此精度下计算数值积分
+\[S = 4a \int_{0}^{\pi / 2} \sqrt{1 - (\frac{c}{a})^2 \sin^2{\theta}} \rd \theta = 31130 \int_{0}^{\pi / 2} \sqrt{1 - (\frac{389}{3113})^2 \sin^2{\theta}} \rd \theta\]
+使用$n = 4$的柯特斯公式的余项为
+\[R[f] = -\frac{2(b - a)}{945} \Big(\frac{b - a}{4}\Big)^6 f^{(6)}(\eta) < 0.5, \quad \eta \in (0, \pi / 2)\]
+由$n = 4$的柯特斯公式计算得
+\[\begin{split}
+C & = \frac{b - a}{90}[7 f(x_0) + 32 f(x_1) + 12 f(x_2) + 32 f(x_3) + 7 f(x_4)] \\
+& = \frac{\pi}{180}[7 * 31130 + 32 * 31094.39 + 12 * 31008.24 + 32 * 30921.85 + 7 * 30886] \\
+& = 48707.4
+\end{split}\]
+即卫星轨道周长约为$48707 \mathrm{km}$.
+\end{document}
